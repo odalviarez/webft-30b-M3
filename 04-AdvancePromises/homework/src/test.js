@@ -1,9 +1,3 @@
-"use strict";
-/*----------------------------------------------------------------
-Promises Workshop: construye la libreria de ES6 promises, pledge.js
-----------------------------------------------------------------*/
-// TU CÓDIGO AQUÍ:
-
 class $Promise {
   constructor(executor) {
     this._state = "pending";
@@ -100,59 +94,12 @@ class $Promise {
     return this.then(null, errorCb);
   }
 
-  static resolve(data) {
-    if (data instanceof $Promise) {
-      return data;
-    }
+  resolve() {  }
 
-    const promise = new $Promise(() => {});
-
-    promise._internalResolve(data);
-
-    return promise;
-  }
-
-  static all(data) {
-    if (!Array.isArray(data)) {
-      throw new TypeError();
-    }
-    const promesa = new $Promise((resolve, reject) => {
-      const tamanio = data.length;
-      let count = 0;
-      let result = new Array(tamanio);
-      data.forEach((e, i) => {
-        if (e instanceof $Promise) {
-          e.then((value) => {
-            count++;
-            result[i] = value;
-            if (tamanio === count) {
-              resolve(result);
-            }
-          }, reject);
-        } else {
-          count++;
-          result[i] = e;
-          if (tamanio === count) {
-            resolve(result);
-          }
-        }
-      });
-    });
-    return promesa;
-  }
 }
 
-module.exports = $Promise;
-/*------------------------------
-/*-------------------------------------------------------
-El spec fue diseñado para funcionar con Test'Em, por lo tanto no necesitamos
-realmente usar module.exports. Pero aquí está para referencia:
 
-module.exports = $Promise;
-
-Entonces en proyectos Node podemos esribir cosas como estas:
-
-var Promise = require('pledge');
-…
-var promise = new Promise(function (resolve, reject) { … });
---------------------------------------------------------*/
+function noop() {}
+let test = new $Promise (noop)
+    console.log(typeof test.resolve);
+    
